@@ -21,6 +21,10 @@ class App extends Component {
     axios.get('/newJokes')
       .then(response => {
         console.log(response.data);
+        let jokesArray = response.data;
+        this.setState({
+          originalJokes: jokesArray,
+        })
       })
   }
 
@@ -28,6 +32,7 @@ class App extends Component {
     return (
       <div className="App">
         <NewJokeButton />
+        {JSON.stringify(this.state)}
       </div>
     );
   }
