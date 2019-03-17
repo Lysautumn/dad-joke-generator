@@ -4,6 +4,10 @@ import titlegen from 'titlegen';
 import './App.css';
 import NewJokeButton from '../NewJokeButton/NewJokeButton';
 
+let styles = {
+  fontWeight: 'bold',
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -12,10 +16,14 @@ class App extends Component {
       newJoke: '',
     }
   }
- 
+  // lastJoke variable will hold the joke currently being stored in the browser's localStorage
+  lastJoke = '';
+
   // when the component mounts, the fetchJokes function will run
+  // will also get last joke generated off of localStorage to display
   componentDidMount() {
     this.fetchJokes();
+    this.lastJoke = localStorage.getItem('jokeHistory');
   }
 
   // fetchJokes will make an axios GET request to server to get joke data
@@ -40,9 +48,7 @@ class App extends Component {
   // createNewJoke uses titlegen library to create new jokes using Markov Chain
   // referenced blog post here: https://www.raymondcamden.com/2018/01/16/generating-random-cure-song-titles
   // newJoke property on state will be set with newly generated joke after each button click
-  // newly created joke will also be added to the generatedJokes array on state
-  storageKey = 0;
-
+  // newly created joke will be stored in the browser's localStorage
   createNewJoke = () => {
     let generator = titlegen.create();
     
@@ -53,22 +59,21 @@ class App extends Component {
 
     let newGeneratedJoke = generator.next();
 
-    
-
     this.setState({
       newJoke: newGeneratedJoke,
     }) 
-    // localStorage will only store strings, not an array. How to get it to store a history?
-    localStorage.setItem('jokeHistory' + this.storageKey, newGeneratedJoke);
-
-    this.storageKey++;
+    // changes joke on DOM before resetting localStorage
+    this.lastJoke = localStorage.getItem('jokeHistory');
+    localStorage.setItem('jokeHistory', newGeneratedJoke);
   }
 
   render() {
     return (
       <div className="App">
+        <h1>Dad Joke-inator</h1>
         <NewJokeButton createNewJoke={this.createNewJoke} />
-        <p>{this.state.newJoke}</p>
+        <p style={styles}>{this.state.newJoke}</p>
+        <p>Last joke generated: {this.lastJoke}</p>
       </div>
     );
   }
