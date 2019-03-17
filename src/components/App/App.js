@@ -9,7 +9,6 @@ class App extends Component {
     super(props);
     this.state = {
       originalJokes: [],
-      generatedJokes: [],
       newJoke: '',
     }
   }
@@ -42,6 +41,8 @@ class App extends Component {
   // referenced blog post here: https://www.raymondcamden.com/2018/01/16/generating-random-cure-song-titles
   // newJoke property on state will be set with newly generated joke after each button click
   // newly created joke will also be added to the generatedJokes array on state
+  storageKey = 0;
+
   createNewJoke = () => {
     let generator = titlegen.create();
     
@@ -55,10 +56,12 @@ class App extends Component {
     
 
     this.setState({
-      generatedJokes: [ ...this.state.generatedJokes, newGeneratedJoke ],
       newJoke: newGeneratedJoke,
     }) 
-    localStorage.setItem('jokeHistory', JSON.stringify(this.state.generatedJokes));
+    // localStorage will only store strings, not an array. How to get it to store a history?
+    localStorage.setItem('jokeHistory' + this.storageKey, newGeneratedJoke);
+
+    this.storageKey++;
   }
 
   render() {
