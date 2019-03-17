@@ -8,7 +8,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      originalJokes: '',
+      originalJokes: [],
+      generatedJokes: [],
       newJoke: '',
     }
   }
@@ -20,12 +21,11 @@ class App extends Component {
 
   // fetchJokes will make an axios GET request to server to get joke data
   // it will take the response and convert array of objects into an array of joke strings
-  // it will then setState to store the jokes strings in this.state.originalJokes
+  // it will then setState to store the jokes strings in originalJokes property
   fetchJokes = () => {
     axios.get('/newJokes')
       .then(response => {
         let jokesArray = response.data;
-        // let convertedJokesArray = [];
         for (let jokeObject of jokesArray) {
           this.setState({
             originalJokes: [ ...this.state.originalJokes, jokeObject.joke],
@@ -41,6 +41,7 @@ class App extends Component {
   // createNewJoke uses titlegen library to create new jokes using Markov Chain
   // referenced blog post here: https://www.raymondcamden.com/2018/01/16/generating-random-cure-song-titles
   // newJoke property on state will be set with newly generated joke after each button click
+  // newly created joke will also be added to the generatedJokes array on state
   createNewJoke = () => {
     let generator = titlegen.create();
     
@@ -51,9 +52,13 @@ class App extends Component {
 
     let newGeneratedJoke = generator.next();
 
+    
+
     this.setState({
+      generatedJokes: [ ...this.state.generatedJokes, newGeneratedJoke ],
       newJoke: newGeneratedJoke,
     }) 
+    localStorage.setItem('jokeHistory', JSON.stringify(this.state.generatedJokes));
   }
 
   render() {
