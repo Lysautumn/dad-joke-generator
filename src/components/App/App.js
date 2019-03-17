@@ -20,11 +20,12 @@ class App extends Component {
   fetchJokes = () => {
     axios.get('/newJokes')
       .then(response => {
-        console.log(response.data);
         let jokesArray = response.data;
-        this.setState({
-          originalJokes: jokesArray,
-        })
+        for (let jokeObject of jokesArray) {
+          this.setState({
+            originalJokes: [ ...this.state.originalJokes, jokeObject.joke ],
+          })
+        }
       })
   }
 
