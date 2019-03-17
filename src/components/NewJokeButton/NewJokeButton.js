@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 class NewJokeButton extends Component {
+
   render() {
     return (
       <div className="App">
-        <button>Generate Joke</button>
+        <button onClick={this.props.createNewJoke}>Generate Joke</button>
       </div>
     );
   }
