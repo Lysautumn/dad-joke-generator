@@ -34,6 +34,13 @@ Steps:
 - Run `npm run server` in one terminal window
 - Run `npm run client` in the second terminal window, this should open http://localhost:3000/ in your browser.
 
+## Roadmap
+
+In the future, features I would like to implement are:
+
+- CSS styling
+- Change Markov chain configuration to get less nonsensical jokes
+
 ## Credits
 
 Thank you to Raymond Camden for his blog post ["Generating Random Cure Song Titles with Markov Chain"](https://www.raymondcamden.com/2018/01/16/generating-random-cure-song-titles), for laughs and titlegen library recommendation.
