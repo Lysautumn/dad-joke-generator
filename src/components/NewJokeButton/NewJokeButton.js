@@ -4,7 +4,7 @@ class NewJokeButton extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <button onClick={this.props.createNewJoke}>Generate Joke</button>
       </div>
     );

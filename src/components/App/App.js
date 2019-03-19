@@ -3,10 +3,9 @@ import axios from 'axios';
 import titlegen from 'titlegen';
 import './App.css';
 import NewJokeButton from '../NewJokeButton/NewJokeButton';
+import NewJoke from '../NewJoke/NewJoke';
+import LastJoke from '../LastJoke/LastJoke';
 
-let styles = {
-  fontWeight: 'bold',
-}
 
 class App extends Component {
   constructor(props) {
@@ -72,8 +71,8 @@ class App extends Component {
       <div className="App">
         <h1>Dad Joke-inator</h1>
         <NewJokeButton createNewJoke={this.createNewJoke} />
-        <p style={styles}>{this.state.newJoke}</p>
-        <p>Last joke generated: {this.lastJoke}</p>
+        <NewJoke newJoke={this.state.newJoke} />
+        <LastJoke lastJoke={this.lastJoke}/>
       </div>
     );
   }
